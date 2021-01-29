@@ -1,31 +1,40 @@
-import numpy as np
-from sklearn.cluster import MeanShift, estimate_bandwidth
+#this includes segmentation
+
+# import the necessary packages
+from skimage.segmentation import slic
+from skimage.segmentation import mark_boundaries
+from skimage.util import img_as_float
+from skimage import io
 import matplotlib.pyplot as plt
-from PIL import Image
+import argparse
+import cv2 as cv
+from skimage.measure import regionprops
 
 
-image = Image.open('Dataset2/1.jpg')
-image = np.array(image)
-x=len(image)
-y=len(image[0])
-#Need to convert image into feature array based
-#on rgb intensities
-flat_image=np.reshape(image, [-1, 3])
- 
-#Estimate bandwidth
-bandwidth2 = estimate_bandwidth(flat_image,
-                                quantile=.004, n_samples=1000)
-ms = MeanShift(bandwidth2, bin_seeding=True)
-ms.fit(flat_image)
-labels=ms.labels_
- 
-# Plot image vs segmented image
-plt.figure(0)
+# load the image and convert it to a floating point data type
+image =cv.cvtColor(cv.imread("Dataset2/5.jpg"),cv.COLOR_RGB2BGR)
+
+
+# apply SLIC and extract (approximately) the supplied number
+# of segments
+segments = slic(image, n_segments = 250, sigma = 5,multichannel=True)
+
+# show the output of SLIC
+fig = plt.figure("Superpixels -- %d segments%")
+ax = fig.add_subplot(1, 1, 1)
+ax.imshow(mark_boundaries(image, segments))
+plt.axis("off")
+
+# show the plots
+plt.show()
+
+def paint_region_with_avg_intensity(rp, mi, channel,image):
+    for i in range(rp.shape[0]):
+        image[rp[i][0]][rp[i][1]][channel] = mi
+
+for i in range(3):
+    regions = regionprops(segments, intensity_image=image[:,:,i])
+    for r in regions:
+        paint_region_with_avg_intensity(r.coords, int(r.mean_intensity), i,image)
 plt.imshow(image)
-plt.axis('off')
-#plt.subplot(2, 1, 2)
-
-plt.figure(1)
-plt.imshow(np.reshape(labels, [x,y])) #cmap= 'gray'
-plt.axis('off')
 plt.show()
