@@ -9,16 +9,16 @@ def accentuateTheRoads(img):
     for i in range(0,len(roads)):
         for j in range(0,len(roads[0])):
             pixel = roads[i][j]
-            if(np.amax(pixel)-np.amin(pixel)>20 or np.amin(pixel)<55 or np.amax(pixel)>180):
+            if(np.amax(pixel)-np.amin(pixel)>20 or np.amin(pixel)<80 or np.amax(pixel)>180):
                 roads[i][j]=np.zeros((3))
-    # plt.imshow(roads)
-    # plt.show()
+    # # # plt.imshow(roads)
+    # # # plt.show()
     cv2.imwrite("roads.jpg",roads)
     return roads
     return roads
 
 def applyHough(img,roads):
-    lines = cv2.HoughLinesP(cv2.cvtColor(roads, cv2.COLOR_BGR2GRAY),1,np.pi/180,100,minLineLength=100,maxLineGap=5)
+    lines = cv2.HoughLinesP(cv2.cvtColor(roads, cv2.COLOR_BGR2GRAY),1,np.pi/180,100,minLineLength=100,maxLineGap=20)
     if(type(lines) == None):
         print("anan")
     else:
@@ -42,8 +42,8 @@ def overlay(img, roads):
 
 def final_q3(input_file_path, output_folder):
     img = cv2.imread(input_file_path)
-    plt.imshow(img)
-    plt.show()
+    # plt.imshow(img)
+    # plt.show()
     roads = accentuateTheRoads(img)
     roads = applyHough(img,roads)
     roads = postProcess(roads)
