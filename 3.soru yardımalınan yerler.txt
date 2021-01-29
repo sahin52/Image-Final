@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=rVBVqVmHtfc
+
+sobel,laplacian difference:
+https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_gradients/py_gradients.html
+
+
+
