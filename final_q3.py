@@ -1,3 +1,5 @@
+#e2264562 Sahin Kasap
+
 import cv2 as cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -18,9 +20,9 @@ def accentuateTheRoads(img):
     return roads
 
 def applyHough(img,roads):
-    lines = cv2.HoughLinesP(cv2.cvtColor(roads, cv2.COLOR_BGR2GRAY),1,np.pi/180,100,minLineLength=100,maxLineGap=20)
+    lines = cv2.HoughLinesP(cv2.cvtColor(roads, cv2.COLOR_BGR2GRAY),cv2.HOUGH_PROBABILISTIC,np.pi/180,100,minLineLength=100,maxLineGap=8)
     if(type(lines) == None):
-        print("anan")
+        pass
     else:
         for line in lines:
             x1,y1,x2,y2 = line[0]
@@ -50,4 +52,4 @@ def final_q3(input_file_path, output_folder):
     img = overlay(img, roads)
     cv2.imwrite(output_folder,img)
     pass
-final_q3("Dataset3/4.png","q4Res.jpg")
+final_q3("Dataset3/3.png","q3Res.jpg")
