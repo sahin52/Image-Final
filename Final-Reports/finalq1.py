@@ -9,7 +9,7 @@ from skimage.morphology import skeletonize
 cv = cv2
 def getImages(input_file_path):
     res = []
-    for root, dirs, files in os.walk(input_file_path):
+    for _, _, files in os.walk(input_file_path):
         for filename in files:
             res.append((cv2.imread(input_file_path+"/"+filename),filename))
     return res
