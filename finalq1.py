@@ -1,3 +1,4 @@
+#e2264562 Sahin Kasap
 import cv2 as cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,8 +47,8 @@ def bounding_box(images):
         for cont in contours:
             x,y,w,h = cv2.boundingRect(cont)
             cv.rectangle(img,(x,y),(x+w,y+h),(0,0,255),1)
-        plt.imshow(img)
-        plt.show()
+        # plt.imshow(img)
+        # plt.show()
         res.append(img)
         conts.append(contours)
     return res,conts
@@ -99,9 +100,9 @@ def final_q1(input_file_path,output_file):
     images = getImages(input_file_path)
     images,filenames = seperateImageAndFilenames(images)
     images = enhance_images(images)
-    plt.imshow(images[0]/255.0, cmap="gray")
-    plt.show()
-    draw_images(images)
+    # plt.imshow(images[0]/255.0, cmap="gray")
+    # plt.show()
+    # draw_images(images)
     boundedimage,conts = bounding_box(images) 
     images = skeleton(images)
     numberOfLoopies = numberOfLoops(images)

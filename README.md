@@ -9,3 +9,4 @@ final_q2("Dataset2/input1.jpg","Result2-1.jpg")
 
 The function are in final_qX.py files, and the tests are in test_qX.py files.
 You can import the final_qX.py files into your working environment. OR you can test with the test_qX.py files.
+I used python3
