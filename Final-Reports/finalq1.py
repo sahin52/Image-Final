@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import os
 from skimage.morphology import skeletonize
 
-
+debugMode = True
 cv = cv2
 def getImages(input_file_path):
     res = []
-    for _, _, files in os.walk(input_file_path):
+    for root, dirs, files in os.walk(input_file_path):
         for filename in files:
             res.append((cv2.imread(input_file_path+"/"+filename),filename))
     return res
@@ -19,7 +19,7 @@ def getImages(input_file_path):
 def enhance_images(images):
     res = []
     for img in images:
-        ret,gray = cv2.threshold(img,115,255,cv2.THRESH_BINARY)
+        _,gray = cv2.threshold(img,115,255,cv2.THRESH_BINARY)
         for i in range (0,len(gray)):
             for j in range(0,len(gray[0])):
                 pixel = gray[i][j]
@@ -31,7 +31,7 @@ def enhance_images(images):
         #for i in range(0,len(gray)):
             #if(gray[i][0][0]!=color[0] and gray[i][0][1]!=color[1] and gray[i][0][2]!=color[2]):
                 #gray[i][0]=color
-                    
+           
         res.append(gray)
     
     return res
@@ -51,6 +51,9 @@ def bounding_box(images):
         # plt.show()
         res.append(img)
         conts.append(contours)
+        if(debugMode):
+            plt.imshow(img)
+            plt.show()
     return res,conts
 
 def skeleton(images):
@@ -97,6 +100,7 @@ def seperateImageAndFilenames(images):
     return imgs,filenames
 
 def final_q1(input_file_path,output_file):
+    print("final_q1 function started for "+input_file_path)
     images = getImages(input_file_path)
     images,filenames = seperateImageAndFilenames(images)
     images = enhance_images(images)
@@ -107,6 +111,9 @@ def final_q1(input_file_path,output_file):
     images = skeleton(images)
     numberOfLoopies = numberOfLoops(images)
     measurePerformance(numberOfLoopies)
+    for i in range(0, len(filenames)):
+        cv.imwrite(filenames[i],images[i])
+
     pass
 #final_q1("Dataset1","")
 

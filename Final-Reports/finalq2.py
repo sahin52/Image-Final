@@ -51,11 +51,9 @@ def nCutSegmentation(graph,segments,img):
                 emptyimage[i][j][1] = img[i][j][1]
                 emptyimage[i][j][2] = img[i][j][2]
     
-
-    plt.imshow(emptyimage)
-    plt.show()
-    # plt.imshow(img)
-    # plt.show()
+    if(debugMode):
+        plt.imshow(emptyimage)
+        plt.show()
     
     return emptyimage
     pass
@@ -66,6 +64,7 @@ def nCutSegmentation(graph,segments,img):
 
 
 def final_q2(input_file_path, output_folder):
+    print("final_q2 function started for "+input_file_path)
     image = cv.cvtColor(cv.imread(input_file_path),cv.COLOR_RGB2BGR)
     segments  = generateSuperPixels(image)
     graph   = attributedGraph(image,segments)
