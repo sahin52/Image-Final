@@ -1,3 +1,5 @@
+#e2264562 Şahin Kasap
+
 in q1, give input_file_path as only the name of the folder like:
 Dataset1
 and the output_folder is again the same:
